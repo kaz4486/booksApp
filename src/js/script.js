@@ -28,8 +28,8 @@ function render() {
 //const bookList = document.querySelector('.book');
 
 function initActions() {
-  /*const imageElements = document.querySelectorAll('.book__image');
-  console.log(imageElements);*/
+  const imageElements = document.querySelectorAll('.book__image');
+  console.log(imageElements);
   const favoriteBooks = [];
   //for (let elem of imageElements) {
   //const elemId = imageElements[data - id];
@@ -57,6 +57,30 @@ function initActions() {
       const indexOf = favoriteBooks.indexOf(event.target.offsetParent);
       favoriteBooks.splice(indexOf, 1);
     }
+  });
+
+  const filters = [];
+  const filtersContainer = document.querySelector('.filters');
+  console.log(filters);
+  console.log(filtersContainer);
+
+  filtersContainer.addEventListener('click', function (event) {
+    console.log(event);
+    if (
+      event.target.tagName == 'INPUT' &&
+      event.target.type == 'checkbox' &&
+      event.target.name == 'filter'
+    ) {
+      console.log(event.target.value);
+
+      if (event.target.checked == true) {
+        filters.push(event.target.value);
+      } else if (event.target.checked == false) {
+        const indexOf = filters.indexOf(event.target.value);
+        filters.splice(indexOf, 1);
+      }
+    }
+    console.log(filters);
   });
 }
 
