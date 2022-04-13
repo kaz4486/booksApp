@@ -81,7 +81,28 @@ function initActions() {
       }
     }
     console.log(filters);
+    filterBooks();
   });
+
+  function filterBooks() {
+    for (const book in dataSource.books) {
+      let shouldBeHidden = false;
+
+      for (let filter of filters) {
+        if (!book.details[filter]) {
+          shouldBeHidden = true;
+          break;
+        }
+      }
+      const imageElements = document.querySelectorAll('.book__image');
+      if (shouldBeHidden == true) {
+        imageElements.classList.add('hidden');
+      } else {
+        imageElements.classList.remove('hidden');
+      }
+      //if (filters.includes(dataSource.books.details)
+    }
+  }
 }
 
 render();
