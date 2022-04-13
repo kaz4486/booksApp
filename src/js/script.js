@@ -22,6 +22,22 @@ function render() {
     /* add created element to booksList*/
 
     booksListContainer.appendChild(bookElement);
+
+    // const dom for adding style
+
+    const bookRatingFil = bookElement.querySelector('.book__rating__fill');
+    console.log(bookRatingFil);
+
+    /*const bookRating = dataSource.books[book].rating;
+    console.log(bookRating);
+    const bookRatingPercent = bookRating * 10;
+    console.log(bookRatingPercent);
+    const bookRatingPercentBla = bookRatingPercent + '%';
+    console.log(bookRatingPercentBla);
+    bookRatingFil.setAttribute(
+      'style',
+      'background-image:linear-gradient(to right, #2bee14 , white, ${bookRatingPercentBla});'
+    );*/
   }
 }
 
@@ -87,21 +103,30 @@ function initActions() {
   function filterBooks() {
     for (let book in dataSource.books) {
       let shouldBeHidden = false;
-
-      for (let filter of filters) {
-        if (!book.details[filter]) {
+      const bookId = dataSource.books[book].id;
+      console.log(bookId);
+      for (const filter of filters) {
+        console.log(filter);
+        if (!dataSource.books[book].details[filter]) {
+          console.log(dataSource.books[book].details[filter]);
           shouldBeHidden = true;
           break;
         }
       }
-      const imageElementId = document.querySelector(
-        '.book__image[data-id="book.id"]'
-      );
-      if (shouldBeHidden == true) {
-        imageElementId.classList.add('hidden');
+
+      const imageElement = document.querySelector('.book__image');
+      const imageElementId = imageElement.getAttribute('data-id');
+      console.log(imageElementId);
+
+      if (shouldBeHidden == true && imageElementId != bookId) {
+        imageElement.classList.add('hidden');
       } else {
-        imageElementId.classList.remove('hidden');
+        imageElement.classList.remove('hidden');
       }
+      /*const imageElementId = document.querySelector(
+        '.book__image [data-id=${book.id}]'
+      );*/
+
       //if (filters.includes(dataSource.books.details)
     }
   }
