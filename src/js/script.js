@@ -85,7 +85,7 @@ function initActions() {
   });
 
   function filterBooks() {
-    for (const book in dataSource.books) {
+    for (let book in dataSource.books) {
       let shouldBeHidden = false;
 
       for (let filter of filters) {
@@ -94,11 +94,13 @@ function initActions() {
           break;
         }
       }
-      const imageElements = document.querySelectorAll('.book__image');
+      const imageElementId = document.querySelector(
+        '.book__image[data-id="book.id"]'
+      );
       if (shouldBeHidden == true) {
-        imageElements.classList.add('hidden');
+        imageElementId.classList.add('hidden');
       } else {
-        imageElements.classList.remove('hidden');
+        imageElementId.classList.remove('hidden');
       }
       //if (filters.includes(dataSource.books.details)
     }
