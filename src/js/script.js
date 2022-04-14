@@ -10,9 +10,36 @@ console.log(booksListContainer);
 
 function render() {
   for (const book in dataSource.books) {
-    //generated HTML based on template
+    /*const bookRatingFil = bookElement.querySelector('.book__rating__fill');
+    console.log(bookRatingFil);*/
 
-    const generatedHTML = templatesBooks(dataSource.books[book]);
+    const rating = dataSource.books[book].rating;
+    console.log(rating);
+    const ratingBgc = determineRatingBgc(rating);
+    console.log(ratingBgc);
+    const ratingWidth = rating * 10;
+    console.log(ratingWidth);
+    /*const bookRatingPercent = bookRating * 10;
+    console.log(bookRatingPercent);
+    const bookRatingPercentBla = bookRatingPercent + '%';
+    console.log(bookRatingPercentBla);
+    bookRatingFil.setAttribute(
+      'style',
+      `background: linear-gradient(to right, green , white , ${bookRatingPercentBla});`
+    );*/
+
+    const bookData = {
+      name: dataSource.books[book].name,
+      price: dataSource.books[book].price,
+      rating: dataSource.books[book].rating,
+      image: dataSource.books[book].image,
+      id: dataSource.books[book].id,
+      ratingWidth: ratingWidth,
+      ratingBgc: ratingBgc,
+    };
+
+    //generated HTML based on template
+    const generatedHTML = templatesBooks(bookData);
     console.log(generatedHTML);
     /* create element DOM using utils.createElementFromHTML*/
 
@@ -24,20 +51,29 @@ function render() {
     booksListContainer.appendChild(bookElement);
 
     // const dom for adding style
+  }
+}
 
-    const bookRatingFil = bookElement.querySelector('.book__rating__fill');
-    console.log(bookRatingFil);
-
-    /*const bookRating = dataSource.books[book].rating;
-    console.log(bookRating);
-    const bookRatingPercent = bookRating * 10;
-    console.log(bookRatingPercent);
-    const bookRatingPercentBla = bookRatingPercent + '%';
-    console.log(bookRatingPercentBla);
-    bookRatingFil.setAttribute(
-      'style',
-      'background-image:linear-gradient(to right, #2bee14 , white, ${bookRatingPercentBla});'
-    );*/
+function determineRatingBgc(rating) {
+  if (rating < 6) {
+    const bgc =
+      'background: linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%);';
+    return bgc;
+  }
+  if (rating > 6 && rating <= 8) {
+    const bgc =
+      'background: linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%);';
+    return bgc;
+  }
+  if (rating > 8 && rating <= 9) {
+    const bgc =
+      'background: linear-gradient(to bottom, #299a0b 0%, #299a0b 100%);';
+    return bgc;
+  }
+  if (rating > 9) {
+    const bgc =
+      'background: linear-gradient(to bottom, #ff0084 0%,#ff0084 100%);';
+    return bgc;
   }
 }
 
@@ -114,11 +150,13 @@ function initActions() {
         }
       }
 
-      const imageElement = document.querySelector('.book__image');
-      const imageElementId = imageElement.getAttribute('data-id');
-      console.log(imageElementId);
+      const imageElement = document.querySelector(`[data-id="${bookId}"]`);
+      /*const imageElementId = imageElement.getAttribute('data-id');
+      console.log(imageElementId);*/
 
-      if (shouldBeHidden == true && imageElementId != bookId) {
+      //generateTitleLinks('[data-tags~="' + tag + '"]');
+
+      if (shouldBeHidden == true) {
         imageElement.classList.add('hidden');
       } else {
         imageElement.classList.remove('hidden');
