@@ -1,10 +1,20 @@
+const select = {
+  templateOf: {
+    book: '#template-book',
+  },
+  dom: {
+    image: 'book__image',
+    list: '.books-list',
+  },
+};
+
 class BookList {
   constructor() {
     const thisBookList = this;
     thisBookList.initData();
-
-    thisBookList.render();
     thisBookList.getElements();
+    thisBookList.render();
+
     thisBookList.initActions();
   }
   initData() {
@@ -24,18 +34,19 @@ class BookList {
       console.log(ratingWidth);
 
       const bookData = {
-        name: this.data[book].name,
+        /*name: this.data[book].name,
         price: this.data[book].price,
         rating: this.data[book].rating,
         image: this.data[book].image,
-        id: this.data[book].id,
-        ratingWidth: ratingWidth,
-        ratingBgc: ratingBgc,
+        id: this.data[book].id,*/
+        ...this.data[book], //operator destrukturyzacji
+        ratingWidth, //obiekt short hand notation
+        ratingBgc,
       };
 
       //generated HTML based on template
       thisBookList.templates = Handlebars.compile(
-        document.querySelector('#template-book').innerHTML
+        document.querySelector(select.templateOf.book).innerHTML
       );
 
       const generatedHTML = thisBookList.templates(bookData);
@@ -46,10 +57,10 @@ class BookList {
       console.log(thisBookList.element);
 
       /* add created element to booksList container*/
-      const booksListContainer = document.querySelector('.books-list');
-      console.log(booksListContainer);
+      /*const booksListContainer = document.querySelector('.books-list');
+      console.log(booksListContainer);*/
 
-      booksListContainer.appendChild(thisBookList.element);
+      thisBookList.booksListContainer.appendChild(thisBookList.element);
     }
   }
   getElements() {
@@ -57,7 +68,7 @@ class BookList {
 
     thisBookList.filtersContainer = document.querySelector('.filters');
 
-    thisBookList.booksListContainer = document.querySelector('.books-list');
+    thisBookList.booksListContainer = document.querySelector(select.dom.list);
   }
 
   initActions() {
@@ -75,7 +86,7 @@ class BookList {
 
       if (
         !favoriteBooks.includes(elemId) &&
-        event.target.offsetParent.classList.contains('book__image')
+        event.target.offsetParent.classList.contains(select.dom.image)
       ) {
         console.log(favoriteBooks[elemId]);
         console.log(event);
@@ -85,7 +96,7 @@ class BookList {
         console.log(favoriteBooks);
       } else if (
         favoriteBooks.includes(elemId) &&
-        event.target.offsetParent.classList.contains('book__image')
+        event.target.offsetParent.classList.contains(select.dom.image)
       ) {
         event.target.offsetParent.classList.remove('favorite');
         const indexOf = favoriteBooks.indexOf(event.target.offsetParent);
